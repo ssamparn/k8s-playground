@@ -50,3 +50,77 @@ Default output format [None]: json
 ```bash
 $ aws ec2 describe-vpcs
 ```
+
+
+## Step-02: Install kubectl CLI
+- **IMPORTANT NOTE:**  For `kubectl` binaries for EKS, please prefer to use from Amazon (**Amazon EKS-vended kubectl binary**)
+- This will help us to get the exact Kubectl client version based on our EKS Cluster version. You can use the below documentation link to download the binary.
+- Reference: https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+
+### MAC - Install and configure kubectl CLI
+- Kubectl version we are using here is 1.29.3 (It may vary based on Cluster version you are planning use in AWS EKS).
+- The binary is identical to the upstream community versions. The binary is not unique to Amazon EKS or AWS.
+
+```bash 
+$ cd sashankasamantray
+$ mkdir kubectlbinary
+$ cd kubectlbinary
+$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.3/2024-04-19/bin/darwin/amd64/kubectl
+$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.3/2024-04-19/bin/darwin/amd64/kubectl.sha256
+$ ls
+```
+#### Verify the downloaded binary with the SHA-256 checksum for your binary
+```bash
+$ openssl sha1 -sha256 kubectl
+```
+#### Apply execute permissions to the binary
+```bash
+$ chmod +x ./kubectl
+```
+
+#### Copy the binary to a folder in your PATH. If you have already installed a version of kubectl, then we recommend creating a $HOME/bin/kubectl and ensuring that $HOME/bin comes first in your $PATH.
+#### Add the $HOME/bin path to your shell initialization file so that it is configured when you open a shell.
+```bash
+$ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+$ echo 'export PATH=$PATH:$HOME/bin' >> ~/.bash_profile
+```
+
+#### Verify the kubectl installation
+```bash
+$ kubectl version --client
+```
+
+> Note: If the above steps to install `kubectl` does not work, and `$ kubectl version --client` points to the wrong kubectl version, then move the kubectl executable from the `$HOME/bin` directory to `/usr/local/bin/kubectl` directory.
+```bash
+$ sudo mv ./kubectl /usr/local/bin/kubectl
+```
+> Reference: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/#install-with-homebrew-on-macos
+> `$ kubectl version --client` should now point to the AWS EKS `kubectl` version.
+> `$HOME/bin/kubectl` contains the `kubectl` executable downloaded for AWS EKS Cluster.
+> `/usr/local/bin/kubectl` contains the `kubectl` executable downloaded for local k8s cluster.
+> To update the kubectl version for mac use `$ brew install kubectl`. This should update the kubectl version in `/usr/local/bin/kubectl` directory.
+
+
+## Step-03: Install eksctl CLI
+
+#### Install Homebrew on MacOs
+```bash
+$ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+```
+
+#### Install the Weaveworks Homebrew tap
+```bash
+$ brew tap weaveworks/tap
+```
+
+#### Install the Weaveworks Homebrew tap.
+```bash
+$ brew install weaveworks/tap/eksctl
+```
+
+#### Verify eksctl version
+```bash
+$ eksctl version
+```
+
+References: https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-eksctl.html
