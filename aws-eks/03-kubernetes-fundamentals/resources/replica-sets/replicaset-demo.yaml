@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-rs
+  labels:
+    app: my-hello
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: my-hello
+  template:
+    metadata:
+      labels:
+        app: my-hello
+    spec:
+      containers:
+        - name: hello-container
+          image: busybox
+          command: ['sh', '-c', 'echo Hello from my container! && sleep 3600']
