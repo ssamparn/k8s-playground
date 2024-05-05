@@ -13,6 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <dependencies>
-  </dependencies>
+  <modules>
+    <module>aws-eks/03-kubernetes-fundamentals/resources/services/kube-helloworld</module>
+  </modules>
 </project>
