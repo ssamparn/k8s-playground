@@ -24,6 +24,8 @@ $ docker push ssamantr/nginx-web-server-v2:1.0.0
 # Create Deployment
 $ kubectl create deployment <deplyment-name> --image=<Container-Image>
 $ kubectl create deployment nginx-web-server-deployment --image=ssamantr/nginx-web-server-v1:1.0.0
+$ kubectl port-forward deployment.apps/nginx-web-server-deployment 8080:80
+$ curl http://localhost:8080/
 ```
 
 ```bash
@@ -37,6 +39,8 @@ $ kubectl get deployment nginx-web-server-deployment -o yaml
 # Update Deployment - SHOULD WORK NOW
 $ kubectl set image deployment/<deployment-name> <container-name>=<container-image> --record=true
 $ kubectl set image deployment/nginx-web-server-deployment nginx-web-server-v1=ssamantr/nginx-web-server-v2:1.0.0 --record=true
+$ kubectl port-forward deployment.apps/nginx-web-server-deployment 8080:80
+$ curl http://localhost:8080/
 ```
 
 ### Verify Rollout Status (Deployment Status)
