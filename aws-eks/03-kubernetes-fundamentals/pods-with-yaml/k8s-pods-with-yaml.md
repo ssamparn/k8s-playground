@@ -23,9 +23,9 @@ spec:
 #### Create Pod
 ```bash
 # Create Pod
-$ kubectl create -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yml
+$ kubectl create -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yaml
 [or]
-$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yml
+$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yaml
 
 # List Pods
 $ kubectl get pods
@@ -39,7 +39,7 @@ $ kubectl get pods
 
 ```bash
 # Create Service
-$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-nodeport-service.yml
+$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-nodeport-service.yaml
 
 # List Service
 $ kubectl get svc
@@ -56,8 +56,8 @@ $ kubectl port-forward service/backend-app-nodeport-service 8080:8080
 $ curl http://localhost:8080/hello
 
 # Delete Pod
-$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yml
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yaml
 
 # Delete Service
-$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-nodeport-service.yml
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-nodeport-service.yaml
 ```
