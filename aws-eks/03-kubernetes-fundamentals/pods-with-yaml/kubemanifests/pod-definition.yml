@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-app-pod
+  labels:
+    app: backend-app
+spec:
+  containers:
+    - name: backend-app
+      image: ssamantr/kube-helloworld:1.0.0
+      ports:
+        - containerPort: 8080

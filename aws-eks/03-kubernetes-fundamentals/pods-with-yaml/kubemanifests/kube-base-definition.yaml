@@ -1,0 +1,8 @@
+apiVersion:
+# apiVersion: version of k8s objects
+kind:
+# kind: k8s objects
+metadata:
+# metadata: define name and labels for k8s objects
+spec:
+# spec: specification or real definition for k8s objects
