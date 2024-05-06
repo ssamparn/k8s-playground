@@ -8,7 +8,7 @@
 
 ```bash
 # Create ReplicaSet
-$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kubemanifests/replicaset-definition.yaml
+$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kube-manifests/replicaset-definition.yaml
 
 # List replica sets
 $ kubectl get rs
@@ -30,7 +30,7 @@ $ kubectl delete pod <Pod-Name>
 #### Create NodePort Service for ReplicaSet & Test
 ```bash
 # Create NodePort Service
-$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kubemanifests/replicaset-nodeport-servie.yaml
+$ kubectl apply -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kube-manifests/replicaset-nodeport-service.yaml
 
 # List NodePort Service
 $ kubectl get svc
@@ -44,4 +44,10 @@ $ curl http://<Worker-Node-Public-IP>:31232
 or
 $ kubectl port-forward service/replicaset-node-port-service 8080:8080
 $ curl http://localhost:8080/hello
+
+# Delete ReplicaSet
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kube-manifests/replicaset-definition.yaml
+
+# Delete NodePort Service
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/replicasets-with-yaml/kube-manifests/replicaset-nodeport-service.yaml
 ```
