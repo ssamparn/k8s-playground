@@ -33,7 +33,7 @@ $ kubectl run nginx-pod-v1 --image ssamantr/nginx-web-server-v1:1.0.0
 
 ### List Pods
 - Get the list of pods
-```
+```bash
 # List Pods
 $ kubectl get pods
 
@@ -138,6 +138,12 @@ $ kubectl get nodes -o wide
 - **Access the Application using Public IP**
 ```bash
 $ curl http://<any-worker-node-public-ip>:<Node-Port>
+or
+$ kubectl port-forward pod/nginx-pod-v1 8080:80
+$ curl http://localhost:8080/
+or
+$ kubectl port-forward service/nginx-node-port-service 8080:80
+$ curl http://localhost:8080/
 ```
 
 ## Interact with a Pod

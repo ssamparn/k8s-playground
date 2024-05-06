@@ -54,4 +54,10 @@ or
 $ kubectl port-forward pod/backend-app-pod 8080:8080
 $ kubectl port-forward service/backend-app-nodeport-service 8080:8080
 $ curl http://localhost:8080/hello
+
+# Delete Pod
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-definition.yml
+
+# Delete Service
+$ kubectl delete -f aws-eks/03-kubernetes-fundamentals/pods-with-yaml/kubemanifests/pod-nodeport-service.yml
 ```
