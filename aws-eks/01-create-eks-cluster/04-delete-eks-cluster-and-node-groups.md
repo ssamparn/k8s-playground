@@ -9,11 +9,11 @@ $ eksctl get clusters
 
 # Capture Node Group name
 $ eksctl get nodegroup --cluster=<clusterName>
-$ eksctl get nodegroup --cluster=first-eks-cluster
+$ eksctl get nodegroup --cluster=k8s-cluster
 
 # Delete Node Group
 $ eksctl delete nodegroup --cluster=<clusterName> --name=<nodegroupName>
-$ eksctl delete nodegroup --cluster=first-eks-cluster --name=first-eks-cluster-ng-public1
+$ eksctl delete nodegroup --cluster=k8s-cluster --name=k8s-cluster-ng-public1
 ```
 
 ## Step-02: Delete Cluster
@@ -22,7 +22,7 @@ $ eksctl delete nodegroup --cluster=first-eks-cluster --name=first-eks-cluster-n
 ```bash
 # Delete Cluster
 $ eksctl delete cluster <clusterName>
-$ eksctl delete cluster first-eks-cluster
+$ eksctl delete cluster k8s-cluster
 ```
 
 ## Important Notes
