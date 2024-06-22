@@ -4,11 +4,12 @@
 
 #### Create EKS Cluster
 ```bash
-$ eksctl create cluster --name=first-eks-cluster \
+$ eksctl create cluster --name=k8s-cluster \
                       --region=us-east-1 \
                       --zones=us-east-1a,us-east-1b \
-                      --without-nodegroup 
+                      --without-nodegroup
 ```
+> Reference: https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html
 
 #### Get List of clusters
 ```bash
@@ -31,7 +32,7 @@ $ eksctl utils associate-iam-oidc-provider \
 # Replace with region & cluster name
 $ eksctl utils associate-iam-oidc-provider \
     --region us-east-1 \
-    --cluster first-eks-cluster \
+    --cluster k8s-cluster \
     --approve
 ```
 
@@ -45,13 +46,14 @@ $ eksctl utils associate-iam-oidc-provider \
 - These add-ons will create the respective IAM policies for us automatically within our Node Group role.
 ```bash
 $ eksctl create --help
+$ eksctl create cluster --help
 $ eksctl create nodegroup --help
 ```
 ```bash
 # Create Public Node Group
-$ eksctl create nodegroup --cluster=first-eks-cluster \
+$ eksctl create nodegroup --cluster=k8s-cluster \
                         --region=us-east-1 \
-                        --name=first-eks-cluster-ng-public1 \
+                        --name=k8s-cluster-ng-public1 \
                         --node-type=t3.medium \
                         --nodes=2 \
                         --nodes-min=2 \
@@ -71,16 +73,17 @@ $ eksctl create nodegroup --cluster=first-eks-cluster \
 ```bash
 # Get all the nodes
 $ kubectl get nodes
+$ kubectl get nodes -o wide
 ```
 
 ## Step-05: Verify Cluster & Nodes
 
 ### Verify Cluster, NodeGroup in EKS Management Console
-- Go to Services -> Elastic Kubernetes Service -> first-eks-cluster
+- Go to **Services** -> Elastic Kubernetes Service **(EKS)** -> **k8s-cluster**
 
 ### Verify NodeGroup subnets to confirm EC2 Instances are in Public Subnet
 - Verify the node group subnet to ensure it created in public subnets
-    - Go to Services -> EKS -> first-eks-cluster -> Compute -> first-eks-cluster-ng-public1. Click on the NodeGroup.
+    - Go to **Services** -> **EKS** -> **k8s-cluster** -> **Compute** -> **k8s-cluster-ng-public1**. Click on the NodeGroup.
     - Click on Associated subnet in **Details** tab. Click on any one of the subnet.
     - Click on **Route Table** Tab.
     - We should see that internet route via Internet Gateway (0.0.0.0/0 -> igw-xxxxxxxx)
@@ -92,7 +95,7 @@ $ eksctl get cluster
 
 # List NodeGroups in a cluster
 $ eksctl get nodegroup --cluster=<clusterName>
-$ eksctl get nodegroup --cluster=first-eks-cluster
+$ eksctl get nodegroup --cluster=k8s-cluster
 
 # List Nodes in current kubernetes cluster
 $ kubectl get nodes -o wide
@@ -102,19 +105,19 @@ $ kubectl config view --minify
 ```
 
 ### Verify Worker Node IAM Role and list of Policies
-- Go to Services -> EC2 -> Worker Nodes
-- Click on **IAM Role associated to EC2 Worker Nodes** in the Details Tab.
+- Go to **Services** -> **EC2** -> **Worker Nodes**
+- Click on **IAM Role** associated to EC2 Worker Nodes in the Details Tab.
 
 
 ### Verify CloudFormation Stacks
-- Go to Services -> Cloud Formation -> Stacks -> Worker Node Group
+- Go to **Services** -> **Cloud Formation** -> **Stacks** -> **Worker Node Group**
 - Verify Control Plane Stack & Events
 - Verify NodeGroup Stack & Events
 
 ### Verify NAT Gateway
-- Go to Services -> VPC -> NAT Gateways
+- Go to **Services** -> **VPC** -> **NAT Gateways**
 
-### Login to Worker Node using Keypai kube-demo
+### Login to Worker Node using Keypair `kube-demo`
 - Login to worker node
 
 ```bash
@@ -129,7 +132,7 @@ Use putty
 ```
 
 ### Verify Security Group Associated to Worker Nodes
-- Go to Services -> EC2 -> Worker Nodes
+- Go to **Services** -> **EC2** -> **Worker Nodes**
 - Click on **Security Group** associated to EC2 Instance which contains `remoteAccess` in the name in the Security Tab.
 
 ## Step-06: Update Worker Nodes Security Group to allow all traffic

@@ -23,19 +23,20 @@ $ sudo installer -pkg ./AWSCLIV2.pkg -target /
 #### Verify the installation
 ```bash
 $ aws --version
-Response: aws-cli/2.15.42 Python/3.11.8 Darwin/23.4.0 exe/x86_64 prompt/off
+Response: aws-cli/2.17.0 Python/3.11.8 Darwin/23.5.0 exe/x86_64
 ```
 ```bash
 $ which aws
+Response: /usr/local/bin/aws
 ```
 
 ### Configure AWS Command Line using Security Credentials
 - Go to AWS Management Console --> Services --> IAM
-- Select the IAM User: aws-k8s-user
+- Select the **IAM User**: **aws-k8s-user**
 - **Important Note:** Use only IAM user to generate **Security Credentials**. Never ever use Root User. (Highly not recommended)
 - Click on **Security credentials** tab
 - Click on **Create access key**
-- Copy Access ID and Secret access key
+- Copy **Access ID** and **Secret access key**
 - Go to command line and provide the required details
 
 ```bash
@@ -65,8 +66,8 @@ $ aws ec2 describe-vpcs
 $ cd sashankasamantray
 $ mkdir kubectlbinary
 $ cd kubectlbinary
-$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.3/2024-04-19/bin/darwin/amd64/kubectl
-$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.29.3/2024-04-19/bin/darwin/amd64/kubectl.sha256
+$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.30.0/2024-05-12/bin/darwin/amd64/kubectl
+$ curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.30.0/2024-05-12/bin/darwin/amd64/kubectl.sha256
 $ ls
 ```
 #### Verify the downloaded binary with the SHA-256 checksum for your binary
@@ -98,12 +99,12 @@ $ sudo mv ./kubectl /usr/local/bin/kubectl
 > `$ kubectl version --client` should now point to the AWS EKS `kubectl` version.
 > `$HOME/bin/kubectl` contains the `kubectl` executable downloaded for AWS EKS Cluster.
 > `/usr/local/bin/kubectl` contains the `kubectl` executable downloaded for local k8s cluster.
-> To update the kubectl version for mac use `$ brew install kubectl`. This should update the kubectl version in `/usr/local/bin/kubectl` directory.
+> To update the kubectl version for mac use `$ brew install kubectl`. This should update the kubectl version in `/usr/local/bin/kubectl` directory for the local k8s cluster.
 
 
 ## Step-03: Install eksctl CLI
 
-#### Install Homebrew on MacOs
+#### Install Homebrew if you don't already have installed on MacOS
 ```bash
 $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
@@ -113,9 +114,13 @@ $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/
 $ brew tap weaveworks/tap
 ```
 
-#### Install the Weaveworks Homebrew tap.
+#### Install or Upgrade the Weaveworks Homebrew tap.
 ```bash
+# install eksctl
 $ brew install weaveworks/tap/eksctl
+
+# upgrade eksctl if it is already installed
+$ brew upgrade eksctl & brew link --overwrite eksctl
 ```
 
 #### Verify eksctl version
