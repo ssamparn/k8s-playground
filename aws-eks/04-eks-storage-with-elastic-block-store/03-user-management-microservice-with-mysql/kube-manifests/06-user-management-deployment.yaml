@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: user-management-microservice
+  labels:
+    app: user-management-restapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management-restapp
+  template:  
+    metadata:
+      labels: 
+        app: user-management-restapp
+    spec:
+      containers:
+        - name: user-management-restapp
+          image: ssamantr/user-service-rds-mysql:1.0.0
+          ports: 
+            - containerPort: 8090
+          env:
+            - name: spring.datasource.url
+              value: 'jdbc:mysql://mysql:3306/user-management'
+            - name: spring.datasource.username
+              value: 'user'
+            - name: spring.datasource.password
+              value: 'password'

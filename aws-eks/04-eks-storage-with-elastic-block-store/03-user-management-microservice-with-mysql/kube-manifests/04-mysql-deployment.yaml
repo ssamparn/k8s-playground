@@ -2,33 +2,39 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-deployment
-spec: 
+spec:
   replicas: 1
   selector:
     matchLabels:
       app: mysql
   strategy:
-    type: Recreate 
-  template: 
-    metadata: 
-      labels: 
+    type: Recreate
+  template:
+    metadata:
+      labels:
         app: mysql
-    spec: 
+    spec:
       containers:
         - name: mysql
           image: mysql:5.6
           env:
+            - name: MYSQL_DATABASE
+              value: 'user-management'
+            - name: MYSQL_USER
+              value: 'user'
+            - name: MYSQL_PASSWORD
+              value: 'password'
             - name: MYSQL_ROOT_PASSWORD
-              value: mysql-password
+              value: 'password'
           ports:
             - name: mysql-port
               containerPort: 3306
           volumeMounts:
             - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql    
+              mountPath: /var/lib/mysql
             - name: user-management-db-creation-script
               mountPath: /docker-entrypoint-initdb.d
-      volumes: 
+      volumes:
         - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: ebs-mysql-pvc
