@@ -37,7 +37,7 @@ spec:
                 secretKeyRef:
                   name: mysql-db-creds
                   key: db-password
-          livenessProbe:
+          livenessProbe: # optimize readiness and liveness probe
             exec:
               command:
                 - /bin/sh
@@ -49,8 +49,8 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8090
-            initialDelaySeconds: 40
-            periodSeconds: 20
+            initialDelaySeconds: 30
+            periodSeconds: 10
 #          resources:
 #            requests:
 #              cpu: '500m' # `m` means milliCPU

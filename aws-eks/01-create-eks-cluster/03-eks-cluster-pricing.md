@@ -1,6 +1,6 @@
 # EKS Cluster Pricing
 
-## Step-01: EKS Pricing: A Very Important note
+## EKS Pricing: A Very Important note
 
 - EKS is not free (Unlike other AWS Services)
 - In short, no free-tier for EKS.

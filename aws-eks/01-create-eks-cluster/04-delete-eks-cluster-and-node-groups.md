@@ -1,6 +1,6 @@
 # Delete EKS Cluster & Node Groups
 
-## Step-01: Delete Node Group
+## Delete Node Group
 - We can delete a nodegroup separately using below `$ eksctl delete nodegroup` command
 
 ```bash
@@ -16,7 +16,7 @@ $ eksctl delete nodegroup --cluster=<clusterName> --name=<nodegroupName>
 $ eksctl delete nodegroup --cluster=k8s-cluster --name=k8s-cluster-ng-public1
 ```
 
-## Step-02: Delete Cluster
+## Delete Cluster
 - We can delete cluster using `$ eksctl delete cluster` command
 
 ```bash

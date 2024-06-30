@@ -45,7 +45,7 @@
 ## Get the IAM role Worker Nodes ARN and Associate this policy to that role
 
 ```bash
-# Get Worker node IAM Role ARN
+# get worker node IAM role ARN
 $ kubectl -n kube-system describe configmap aws-auth
 
 # from output check for rolearn
@@ -66,9 +66,9 @@ $ kubectl version --client
 ```
 - Deploy Amazon EBS CSI Driver
 ```bash
-# Deploy EBS CSI Driver
+# deploy EBS CSI driver
 $ kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=master"
 
-# Verify ebs-csi pods running
+# verify ebs-csi pods running
 $ kubectl get pods -n kube-system
 ```

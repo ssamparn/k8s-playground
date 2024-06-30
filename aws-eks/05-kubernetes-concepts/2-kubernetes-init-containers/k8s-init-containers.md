@@ -24,38 +24,3 @@
           image: busybox:1.31
           command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
 ```
-
-
-## Step-03: Create & Test
-```
-# Create All Objects
-kubectl apply -f kube-manifests/
-
-# List Pods
-kubectl get pods
-
-# Watch List Pods screen
-kubectl get pods -w
-
-# Describe Pod & Discuss about init container
-kubectl describe pod <usermgmt-microservice-xxxxxx>
-
-# Access Application Health Status Page
-http://<WorkerNode-Public-IP>:31231/usermgmt/health-status
-```
-
-## Step-04: Clean-Up
-- Delete all k8s objects created as part of this section
-```
-# Delete All
-kubectl delete -f kube-manifests/
-
-# List Pods
-kubectl get pods
-
-# Verify sc, pvc, pv
-kubectl get sc,pvc,pv
-```
-
-## References:
-- https://kubernetes.io/docs/concepts/workloads/pods/init-containers/

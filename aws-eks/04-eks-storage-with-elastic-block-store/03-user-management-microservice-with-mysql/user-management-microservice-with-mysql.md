@@ -32,17 +32,17 @@
 ## Create UserManagement Service Deployment & Service
 ```bash
 
-# Create Deployment & NodePort Service
+# create deployment & NodePort service
 $ kubectl apply -f aws-eks/04-eks-storage-with-elastic-block-store/03-user-management-microservice-with-mysql/kube-manifests/06-user-management-deployment.yaml
 $ kubectl apply -f aws-eks/04-eks-storage-with-elastic-block-store/03-user-management-microservice-with-mysql/kube-manifests/07-user-management-service.yaml
 
-# List Pods
+# list pods
 $ kubectl get pods
 
-# Verify logs of user-management microservice pod
+# verify logs of user-management microservice pod
 $ kubectl logs -f <pod-name>
 
-# Verify sc, pvc, pv
+# verify sc, pvc, pv
 $ kubectl get sc,pvc,pv
 ```
 - **Problem Observation:**
@@ -52,13 +52,13 @@ $ kubectl get sc,pvc,pv
 
 - **Access Application**
 ```bash
-# List Services
+# list services
 $ kubectl get svc
 
-# Get Public IP
+# get public IP (External IP)
 $ kubectl get nodes -o wide
 
-# Access Health Status API for User Management Service
+# access health status api for user management service
 $ http://<EKS-WorkerNode-Public-IP>:31231/actuator/health
 ```
 
@@ -93,10 +93,10 @@ $ http://<EKS-WorkerNode-Public-IP>:31231/actuator/health
 ## Verify Users in MySQL Database
 
 ```bash
-# Connect to MYSQL Database
+# connect to mysql database
 $ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -u user -ppassword
 
-# Verify user-management schema got created which we provided in ConfigMap
+# verify user-management schema got created which we provided in ConfigMap
 mysql> show schemas;
 mysql> use user-management;
 mysql> show tables;
@@ -106,9 +106,9 @@ mysql> exit
 
 ### Create and delete all the resources in one go
 ```bash
-# Create All
+# create all (use this)
 $ kubectl create -f aws-eks/04-eks-storage-with-elastic-block-store/03-user-management-microservice-with-mysql/kube-manifests/.
 
-# Delete All
+# delete all (use this)
 $ kubectl delete -f aws-eks/04-eks-storage-with-elastic-block-store/03-user-management-microservice-with-mysql/kube-manifests/.
 ```

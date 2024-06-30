@@ -32,7 +32,7 @@ spec:
 - Update all files from 02 to 08 with `namespace: dev` in top metadata section
 
 - **Example**
-```yml
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -40,10 +40,31 @@ metadata:
   namespace: dev
 ```
 
+## Create ResourceQuota manifest
+```yaml
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: ns-resource-quota
+  namespace: dev
+spec:
+  hard:
+    requests.cpu: "1"
+    requests.memory: 1Gi
+    limits.cpu: "2"
+    limits.memory: 2Gi  
+    pods: "5"    
+    configmaps: "5" 
+    persistentvolumeclaims: "5" 
+    replicationcontrollers: "5" 
+    secrets: "5" 
+    services: "5"                      
+```
+
 ## Create k8s objects & Test
 ```bash
-# create all objects
-$ kubectl apply -f aws-eks/05-kubernetes-concepts/kube-manifests/
+# create all objects (use this)
+$ kubectl apply -f aws-eks/05-kubernetes-concepts/kube-manifests/.
 
 # list pods
 $ kubectl get pods -n dev -w
@@ -54,6 +75,10 @@ $ kubectl get pod <pod-name> -o yaml -n dev
 # get & describe limits
 $ kubectl get limits -n dev
 $ kubectl describe limits default-cpu-mem-limit-range -n dev
+
+# get resource quota 
+$ kubectl get quota -n dev
+$ kubectl describe quota ns-resource-quota -n dev
 
 # get NodePort
 $ kubectl get svc -n dev
@@ -68,6 +93,6 @@ $ curl http://<WorkerNode-Public-IP>:<NodePort>/actuator/health
 ## Clean Up
 - Delete all k8s objects created as part of this section
 ```bash
-# delete all
-$ kubectl delete -f aws-eks/05-kubernetes-concepts/kube-manifests/
+# delete all (use this)
+$ kubectl delete -f aws-eks/05-kubernetes-concepts/kube-manifests/.
 ```
