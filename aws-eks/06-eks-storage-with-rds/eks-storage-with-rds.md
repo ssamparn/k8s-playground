@@ -48,7 +48,7 @@
         - **VPC:** eksctl-k8s-cluster-cluster/VPC
         - **Additional Connectivity Configuration**
             - **Subnet Group:** eks-rds-db-subnetgroup
-            - **Publicyly accessible:** YES (for our learning and troubleshooting - if required)
+            - **Publicly accessible:** YES (for our learning and troubleshooting - if required)
         - **VPC Security Group:** Create New
             - **Name:** eks_rds_db_sg
         - **Availability Zone:** No Preference
@@ -80,12 +80,13 @@ spec:
 $ kubectl apply -f aws-eks/06-eks-storage-with-rds/kube-manifests/01-mysql-externalname-service.yaml
 $ kubectl get svc
 ```
-## Connect to RDS Database using kubectl and create usermgmt schema/db
+## Connect to RDS Database using kubectl and create `user-management` schema/db
 ```bash
 $ kubectl run -it --rm --image=mysql:latest --restart=Never mysql-client -- mysql -h user-management.c5sgo8o4qt95.us-east-1.rds.amazonaws.com -u user -ppassword
 
 mysql> show schemas;
 mysql> create database `user-management`;
+mysql> use user-management;
 mysql> show tables;
 mysql> exit
 ```
