@@ -44,13 +44,7 @@ $ eksctl create cluster --name=k8s-cluster \
                       --without-nodegroup 
                       
 # get list of clusters
-$ eksctl get cluster   
-
-# replace with region & cluster name
-$ eksctl utils associate-iam-oidc-provider \
-    --region us-east-1 \
-    --cluster k8s-cluster \
-    --approve
+$ eksctl get cluster
 
 # create EKS node group in VPC private subnets
 $ eksctl create nodegroup --cluster=k8s-cluster \
@@ -168,6 +162,13 @@ $ kubectl get sa aws-load-balancer-controller -n kube-system
 Obseravation:
 1. Nothing with name "aws-load-balancer-controller" should exist (Error from server (NotFound): serviceaccounts "aws-load-balancer-controller" not found)
 
+# Note: To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster, we must create & associate OIDC identity provider.
+# Create & Associate IAM OIDC Provider for our EKS Cluster
+$ eksctl utils associate-iam-oidc-provider \
+    --region us-east-1 \
+    --cluster k8s-cluster \
+    --approve
+    
 # Template
 $ eksctl create iamserviceaccount \
   --cluster=cluster-name \
@@ -176,13 +177,6 @@ $ eksctl create iamserviceaccount \
   --attach-policy-arn=arn:aws:iam::111122223333:policy/AWSLoadBalancerControllerIAMPolicy \
   --override-existing-serviceaccounts \
   --approve
-
-# Note: To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster, we must create & associate OIDC identity provider.
-# Create & Associate IAM OIDC Provider for our EKS Cluster
-$ eksctl utils associate-iam-oidc-provider \
-    --region us-east-1 \
-    --cluster k8s-cluster \
-    --approve
     
 # Replace name, cluster and policy arn (Policy arn we took note in step-02)
 $ eksctl create iamserviceaccount \
@@ -205,7 +199,7 @@ $ eksctl get iamserviceaccount --cluster k8s-cluster
 - **CFN Template Name:** eksctl-k8s-cluster-addon-iamserviceaccount-kube-system-aws-load-balancer-controller
 - Click on **Resources** tab
 - Click on link in **Physical ID** to open the IAM Role
-- Verify it has **eksctl-k8s-cluster-addon-iamserviceaccount-ku-Role1-GR7BsT0Lv8WL** associated
+- Verify it has **eksctl-k8s-cluster-addon-iamserviceaccount-ku-Role1-6XjLQsvXsMI3** associated
 
 ### Step-03-04: Verify k8s Service Account using kubectl
 ```bash
@@ -267,7 +261,7 @@ $ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.create=false \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=us-east-1 \
-  --set vpcId=vpc-0acc8831f7ca3576a \
+  --set vpcId=vpc-06947630fad24f1e7 \
   --set image.repository=602401143452.dkr.ecr.us-east-1.amazonaws.com/amazon/aws-load-balancer-controller
 ```
 - **Sample output for AWS Load Balancer Controller Install steps**
@@ -406,7 +400,7 @@ $ helm uninstall aws-load-balancer-controller -n kube-system
 
 
 ## Step-06: Review IngressClass Kubernetes Manifest
-- **File Location:** `08-01-Load-Balancer-Controller-Install/kube-manifests/01-ingressclass-resource.yaml`
+- **File Location:** `aws-eks/08-elb-application-load-balancers/01-install-load-balancer-controller/kube-manifests/01-ingressclass-resource.yaml`
 - Understand in detail about annotation `ingressclass.kubernetes.io/is-default-class: "true"`
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -426,11 +420,8 @@ spec:
 
 ## Step-07: Create IngressClass Resource
 ```bash
-# Navigate to Directory
-$ cd 08-01-Load-Balancer-Controller-Install
-
 # Create IngressClass Resource
-$ kubectl apply -f kube-manifests
+$ kubectl apply -f aws-eks/08-elb-application-load-balancers/01-install-load-balancer-controller/kube-manifests/01-ingressclass-resource.yaml
 
 # Verify IngressClass Resource
 $ kubectl get ingressclass
