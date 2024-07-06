@@ -5,7 +5,7 @@
 - Install kubectl CLI
 - Install eksctl CLI
 
-## Step-01: Install AWS CLI
+## Install AWS CLI
 - Reference-1: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html
 - Reference-2: https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
 
@@ -52,7 +52,7 @@ Default output format [None]: json
 $ aws ec2 describe-vpcs
 ```
 
-## Step-02: Install kubectl CLI
+## Install kubectl CLI
 - **IMPORTANT NOTE:**  For `kubectl` binaries for EKS, please prefer to use from Amazon (**Amazon EKS-vended kubectl binary**)
 - This will help us to get the exact Kubectl client version based on our EKS Cluster version. You can use the below documentation link to download the binary.
 - Reference: https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
@@ -101,7 +101,7 @@ $ sudo mv ./kubectl /usr/local/bin/kubectl
 > To update the kubectl version for mac use `$ brew install kubectl`. This should update the kubectl version in `/usr/local/bin/kubectl` directory for the local k8s cluster.
 
 
-## Step-03: Install eksctl CLI
+## Install eksctl CLI
 
 #### Install Homebrew if you don't already have installed on MacOS
 ```bash
