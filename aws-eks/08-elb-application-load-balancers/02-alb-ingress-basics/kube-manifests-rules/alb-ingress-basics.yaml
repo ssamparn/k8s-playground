@@ -22,7 +22,7 @@ metadata:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
 spec:
-  ingressClassName: my-aws-ingress-class # Ingress Class
+  ingressClassName: aws-ingress-class # Ingress Class
   rules:
   - http:
       paths:
