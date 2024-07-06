@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app1-nginx-deployment
+  name: nginx-app-deployment
   labels:
-    app: app1-nginx
+    app: nginx-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app1-nginx
+      app: nginx-app
   template:
     metadata:
       labels:
-        app: app1-nginx
+        app: nginx-app
     spec:
       containers:
-        - name: app1-nginx
-          image: stacksimplify/kube-nginxapp1:1.0.0
+        - name: nginx-app
+          image: ssamantr/ingress-nginx-app:1.0.0
           ports:
             - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1-nginx-nodeport-service
+  name: nginx-app-service
   labels:
-    app: app1-nginx
+    app: nginx-app
   annotations:
 #Important Note:  Need to add health check path annotations in service level if we are planning to use multiple targets in a load balancer    
 #    alb.ingress.kubernetes.io/healthcheck-path: /app1/index.html
 spec:
   type: NodePort
   selector:
-    app: app1-nginx
+    app: nginx-app
   ports:
     - port: 80
       targetPort: 80

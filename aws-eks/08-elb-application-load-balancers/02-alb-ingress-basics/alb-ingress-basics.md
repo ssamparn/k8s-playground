@@ -68,7 +68,7 @@ $ kubectl -n kube-system logs -f aws-load-balancer-controller-65b4f64d6c-t7qqb
 ## Clean Up
 ```bash
 # Delete Kubernetes Resources
-$ kubectl delete -f 01-kube-manifests-default-backend/
+$ kubectl delete -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-default-backend/.
 ```
 
 ## Review Ingress kube-manifest with Ingress Rules
@@ -82,7 +82,7 @@ $ kubectl delete -f 01-kube-manifests-default-backend/
 ## Deploy kube-manifests and Verify
 ```bash
 # Deploy kube-manifests
-$ kubectl apply -f 02-kube-manifests-rules/
+$ kubectl apply -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-rules/.
 
 # Verify k8s Deployment and Pods
 $ kubectl get deploy
@@ -91,10 +91,10 @@ $ kubectl get pods
 # Verify Ingress (Make a note of Address field)
 $ kubectl get ingress
 Obsevation: 
-1. Verify the ADDRESS value, we should see something like "app1ingressrules-154912460.us-east-1.elb.amazonaws.com"
+1. Verify the ADDRESS value, we should see something like `app-ingress-lb-24019112.us-east-1.elb.amazonaws.com`
 
 # Describe Ingress Controller
-$ kubectl describe ingress ingress-nginxapp1
+$ kubectl describe ingress ingress-nginx-app
 Observation:
 1. Review Default Backend and Rules
 
@@ -102,37 +102,33 @@ Observation:
 $ kubectl get svc
 
 # Verify Application Load Balancer using 
-Goto AWS Mgmt Console -> Services -> EC2 -> Load Balancers
+Goto **AWS Management Console** -> **Services** -> **EC2** -> **Load Balancers**
 1. Verify Listeners and Rules inside a listener
 2. Verify Target Groups
 
 # Access App using Browser
 $ kubectl get ingress
 http://<ALB-DNS-URL>
-http://<ALB-DNS-URL>/app1/index.html
+http://<ALB-DNS-URL>/
 or
 http://<INGRESS-ADDRESS-FIELD>
-http://<INGRESS-ADDRESS-FIELD>/app1/index.html
-
-# Sample from my environment (for reference only)
-http://app1ingressrules-154912460.us-east-1.elb.amazonaws.com
-http://app1ingressrules-154912460.us-east-1.elb.amazonaws.com/app1/index.html
+http://<INGRESS-ADDRESS-FIELD>/
 
 # Verify AWS Load Balancer Controller logs
 $ kubectl get po -n kube-system 
 $ kubectl logs -f aws-load-balancer-controller-794b7844dd-8hk7n -n kube-system
 ```
 
-## Step-09: Clean Up
+## Clean Up
 ```bash
 # Delete Kubernetes Resources
-$ kubectl delete -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-default-backend/.
+$ kubectl delete -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-rules/.
 
 # Verify if Ingress Deleted successfully 
 $ kubectl get ingress
 Important Note: It is going to cost us heavily if we leave ALB load balancer idle without deleting it properly
 
-# Verify if the Application Load Balancer delete properly 
+# Verify if the application load balancer got deleted properly 
 Goto **AWS Management Console** -> **Services** -> **EC2** -> **Load Balancers**
 ```
 
