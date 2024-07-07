@@ -23,25 +23,25 @@ spec:
   rules:
     - http:
         paths:           
-          - path: /app2
+          - path: /app/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-app1-service
+                port: 
+                  number: 80
+          - path: /app/v2
             pathType: Prefix
             backend:
               service:
                 name: nginx-app2-service
                 port: 
                   number: 80
-          - path: /app3
+          - path: /app/v3
             pathType: Prefix
             backend:
               service:
                 name: nginx-app3-service
-                port: 
-                  number: 80
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: nginx-app1-service
                 port: 
                   number: 80                     
              
