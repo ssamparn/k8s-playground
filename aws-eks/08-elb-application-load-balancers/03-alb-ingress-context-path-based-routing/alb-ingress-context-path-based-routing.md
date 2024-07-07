@@ -12,6 +12,41 @@ description: Learn AWS Load Balancer Controller - Ingress Context Path Based Rou
 - As part of this process, the respective annotation `alb.ingress.kubernetes.io/healthcheck-path:` will be moved to respective application NodePort Service.
 - Only generic settings will be present in Ingress manifest annotations area `04-alb-ingress-context-path-based-routing.yaml`
 
+## Create nginx app docker images from docker file
+```bash
+# build app1 image
+$ cd aws-eks/08-elb-application-load-balancers/03-alb-ingress-context-path-based-routing/docker/app1
+$ docker build -t ssamantr/nginx-app1-service:1.0.0 .
+$ docker images
+$ docker run -it --name nginx-app1-service -p 8080:80 ssamantr/nginx-app1-service:1.0.0
+$ docker ps
+$ docker exec -it <container-id> bash
+$ curl http://localhost:8080/
+
+# build app2 image
+$ cd aws-eks/08-elb-application-load-balancers/03-alb-ingress-context-path-based-routing/docker/app2
+$ docker build -t ssamantr/nginx-app2-service:1.0.0 .
+$ docker images
+$ docker run -it --name nginx-app2-service -p 8081:80 ssamantr/nginx-app2-service:1.0.0
+$ docker ps
+$ docker exec -it <container-id> bash
+$ curl http://localhost:8081/
+
+# build app3 image
+$ cd aws-eks/08-elb-application-load-balancers/03-alb-ingress-context-path-based-routing/docker/app3
+$ docker build -t ssamantr/nginx-app3-service:1.0.0 .
+$ docker images
+$ docker run -it --name nginx-app3-service -p 8082:80 ssamantr/nginx-app3-service:1.0.0
+$ docker ps
+$ docker exec -it <container-id> bash
+$ curl http://localhost:8082/
+
+# push all 3 images
+$ docker push ssamantr/nginx-app1-service:1.0.0
+$ docker push ssamantr/nginx-app2-service:1.0.0
+$ docker push ssamantr/nginx-app3-service:1.0.0
+```
+
 ## Deploy all manifests and test
 ```bash
 # Deploy Kubernetes manifests

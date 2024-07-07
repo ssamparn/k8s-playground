@@ -11,16 +11,19 @@ description: Learn AWS Load Balancer Controller - Ingress Basics
     - defaultBackend
     - rules
 
-## Deploy kube-manifests and Verify
+## Create ingress-nginx-app docker image from docker file
 ```bash
-$ cd aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/docker/
+$ cd aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/docker/app1
 $ docker build -t ssamantr/ingress-nginx-app:1.0.0 .
 $ docker images
 $ docker run --name ingress-nginx-app -p 8080:80 ssamantr/ingress-nginx-app:1.0.0
 $ docker exec -it <container-id> bash
 $ curl http://localhost:8080
 $ docker push ssamantr/ingress-nginx-app:1.0.0
+```
 
+## Deploy kube-manifests and Verify
+```bash
 # Deploy kube-manifests
 $ kubectl apply -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-default-backend/.
 
