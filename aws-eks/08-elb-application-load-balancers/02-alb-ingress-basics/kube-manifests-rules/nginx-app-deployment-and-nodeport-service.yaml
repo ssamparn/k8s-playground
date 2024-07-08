@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx-app
-          image: ssamantr/ingress-nginx-app:1.0.0
+          image: ssamantr/nginx-ingress-app:1.0.0
           ports:
             - containerPort: 80
 ---

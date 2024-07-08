@@ -13,13 +13,13 @@ description: Learn AWS Load Balancer Controller - Ingress Basics
 
 ## Create ingress-nginx-app docker image from docker file
 ```bash
-$ cd aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/docker/app1
-$ docker build -t ssamantr/ingress-nginx-app:1.0.0 .
+$ cd aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/docker
+$ docker build -t ssamantr/nginx-ingress-app:1.0.0 .
 $ docker images
-$ docker run --name ingress-nginx-app -p 8080:80 ssamantr/ingress-nginx-app:1.0.0
+$ docker run --name nginx-ingress-app -p 8080:80 ssamantr/nginx-ingress-app:1.0.0
 $ docker exec -it <container-id> bash
 $ curl http://localhost:8080
-$ docker push ssamantr/ingress-nginx-app:1.0.0
+$ docker push ssamantr/nginx-ingress-app:1.0.0
 ```
 
 ## Deploy kube-manifests and Verify
@@ -74,7 +74,7 @@ $ kubectl -n kube-system logs -f aws-load-balancer-controller-65b4f64d6c-t7qqb
 $ kubectl delete -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-default-backend/.
 ```
 
-## Review Ingress kube-manifest with Ingress Rules
+## Review Ingress Kube Manifest with Ingress Rules
 - Discuss about [Ingress Path Types](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types)
 - [Better Path Matching With Path Types](https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#better-path-matching-with-path-types)
 - [Sample Ingress Rule](https://kubernetes.io/docs/concepts/services-networking/ingress/#the-ingress-resource)
@@ -82,7 +82,7 @@ $ kubectl delete -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-bas
 - **Exact:** Matches the URL path exactly and with case sensitivity.
 - **Prefix:** Matches based on a URL path prefix split by /. Matching is case-sensitive and done on a path element by element basis.
 
-## Deploy kube-manifests and Verify
+## Deploy Kube Manifests and Verify
 ```bash
 # Deploy kube-manifests
 $ kubectl apply -f aws-eks/08-elb-application-load-balancers/02-alb-ingress-basics/kube-manifests-rules/.
